@@ -4,7 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 30px 15px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, textarea, button {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        input, textarea {
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        button {
+            border: none;
+            background: #1769e0;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0e50b5;
+        }
+
+        .item {
+            background: #f7f9fc;
+            border: 1px solid #e0e5ec;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .item p {
+            margin: 8px 0;
+        }
+
+        .item-id {
+            color: #1769e0;
+        }
+    </style>
 </head>
 <body>
     <main class="container">
@@ -12,13 +91,46 @@
 
         <form action="/submittodoitem" method="POST">
             <label for="itemName">Item Name</label>
-            <input type="text" id="itemName" name="itemName" required>
+            <input
+                type="text"
+                id="itemName"
+                name="itemName"
+                required
+            >
 
             <label for="itemDescription">Item Description</label>
-            <textarea id="itemDescription" name="itemDescription" required></textarea>
+            <textarea
+                id="itemDescription"
+                name="itemDescription"
+                required
+            ></textarea>
 
             <button type="submit">Add Item</button>
         </form>
+
+        <section class="items">
+            <h2>Added Items</h2>
+
+            {% if items %}
+                {% for item in items %}
+                    <article class="item">
+                        <h3>{{ item.get('name', item.get('itemName', '')) }}</h3>
+
+                        <p>
+                            <strong>Description:</strong>
+                            {{ item.get('description', item.get('itemDescription', '')) }}
+                        </p>
+
+                        <p class="item-id">
+                            <strong>Item ID:</strong>
+                            {{ item.get('id', '') }}
+                        </p>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>No items added yet.</p>
+            {% endif %}
+        </section>
     </main>
 </body>
 </html>
