@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "id": 1,
+    "itemName": "Complete Git assignment",
+    "itemDescription": "Practice branching, merging, and rebasing"
+  }
+]
