@@ -106,6 +106,11 @@
                             <strong>Item UUID:</strong>
                             {{ item.get('uuid', '') }}
                         </p>
+
+                        <p>
+                            <strong>Item Hash:</strong>
+                            {{ item.get('hash', '') }}
+                        </p>
                     </article>
                 {% endfor %}
             {% else %}
